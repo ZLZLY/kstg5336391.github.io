@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2017%2F10%2F05%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <title><![CDATA[完成Hexo+Next的博客搭建]]></title>
+    <url>%2F2017%2F10%2F05%2F%E8%AE%B0%E5%BD%95_%E5%AE%8C%E6%88%90Hexo%2BNext%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%2F</url>
+    <content type="text"><![CDATA[耗时：一天成果：完成独立博客搭建（依附于GitHub）过程：网上搜集资料——&gt;配置GitHub——&gt;买域名，绑定———&gt;部署HEXO——&gt;优化Next主题中间经历的最崩溃的就是失误将错误的配置文件部署到GitHub上，导致找不出404原因，导致重新做了一边，太粗心哎我好蠢，一定要在本地试运行才可以！不过看着成功的运行起来，还是蛮有成就感哒。 安装和配置Hexo及Github安装Hexo安装Hexo前，需要安装以下： Node.js 下载地址 Git 下载地址 这里用迅雷下速度比较快，给的链接是64位的 如果要32位的自行百度这里提供个githup for win的图形化客户端，百度云下载：Git for win 但是并不建议使用。。玩git 还是用git bash 方式比较高大上~~ 如果已经安装完成以上程序，打开Git-bash，输入 1npm install -g hexo-cli 即可完成Hexo的安装。 使用Hexo进行本地建站选择一个本地的文件夹，如C:\hexo 输入 123hexo init C:/hexocd C:/hexonpm install 如果hexo安装成功，则在C:\hexo文件夹下的文件目录为 12345678.├── _config.yml // 网站的配置信息，你可以在此配置大部分的参数。├── package.json ├── scaffolds // 模板文件夹。当你新建文章时，Hexo会根据scaffold来建立文件。├── source // 存放用户资源的地方| ├── _drafts| └── _posts└── themes // 存放网站的主题。Hexo会根据主题来生成静态页面。 详细文件或文件夹的具体含义见 Hexo官方文档 之后输入 1hexo server 此时会启动本地部署好的默认的博客网站 地址是：http://localhost:4000/不出意外 这里应该是没啥问题的。。 创建Github账号访问Github官网进行注册 ，这里没啥好说的。 创建与账号同名的Repository一定要同名的Repository，比如帐号是myid,那新建的Repository名称应该是myid.github.io 配置SSH(1) 生成SSH检查是否已经有SSH Key，打开Git Bash，输入 cd ~/.ssh如果没有这个目录，则生成一个新的SSH，输入 1ssh-keygen -t rsa -C &quot;your e-mail&quot; 其中，your e-mail是你注册Github时用到的邮箱。 然后接下来几步都直接按回车键，最后生成如下 (2) 复制公钥内容到Github账户信息中打开~/.ssh/id_rsa.pub文件，复制里面的内容； 打开Github官网，登陆后进入到个人设置(点击头像-&gt;setting)，点击右侧的SSH Keys，点击Add SSH key；填写title之后，将之前复制的内容粘贴到Key框中，最后点击Add key即可。 (3) 测试SSH是否配置成功输入 1ssh -T git@github.com 如果显示以下，则说明ssh配置成功。 1Hi username! You&apos;ve successfully authenticated, but GitHub does not provide shell access. (4) 配置github 账户12git config --global user.name &quot;username&quot;git config --global user.email &quot;email&quot; 上面都是自己的用户名与邮箱 配置完之后输入： 1git config --list查看已设配置 将网站发布到Github的同名repository中 打开C:\Hexo文件夹中的_config.yml文件，找到如下位置，填写 12345# Deployment## Docs: http://hexo.io/docs/deployment.htmldeploy: type: git repo: git@github.com:MyGithub/MyGithub.github.io 到这基本上开始就没问题了，访问 MyGitHub.github.io 就是Hexo 首页了，下面主题就根据个人喜欢吧，我用的是Next，你也可以搜集一些其他出色的主题进行部署。可以参考 https://hexo.io/themes/]]></content>
+      <categories>
+        <category>GitHub相关</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
   </entry>
 </search>
