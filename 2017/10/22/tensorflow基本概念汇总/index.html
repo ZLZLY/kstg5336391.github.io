@@ -1,0 +1,1048 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="tensorflow," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="基本概念——以下概念基本取自《TensorFlow实战Google深度学习框架》与各种无私博主 TensorFlow程序一般可以分为两个阶段，  构造部分，使用tensor表示数据，使用graph来表示计算任务 执行部分，在被称为Session的context里执行图中的计算（使用feed和fetch可以为任意的op赋值或从中获取数据）  计算图TensorFlow中每一个计算都是计算图上的一个节">
+<meta name="keywords" content="tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow基本概念汇总">
+<meta property="og:url" content="http://yoursite.com/2017/10/22/tensorflow基本概念汇总/index.html">
+<meta property="og:site_name" content="念云小筑">
+<meta property="og:description" content="基本概念——以下概念基本取自《TensorFlow实战Google深度学习框架》与各种无私博主 TensorFlow程序一般可以分为两个阶段，  构造部分，使用tensor表示数据，使用graph来表示计算任务 执行部分，在被称为Session的context里执行图中的计算（使用feed和fetch可以为任意的op赋值或从中获取数据）  计算图TensorFlow中每一个计算都是计算图上的一个节">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-22T14:20:59.876Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow基本概念汇总">
+<meta name="twitter:description" content="基本概念——以下概念基本取自《TensorFlow实战Google深度学习框架》与各种无私博主 TensorFlow程序一般可以分为两个阶段，  构造部分，使用tensor表示数据，使用graph来表示计算任务 执行部分，在被称为Session的context里执行图中的计算（使用feed和fetch可以为任意的op赋值或从中获取数据）  计算图TensorFlow中每一个计算都是计算图上的一个节">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/22/tensorflow基本概念汇总/"/>
+
+
+
+
+
+  <title> Tensorflow基本概念汇总 | 念云小筑 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">念云小筑</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/22/tensorflow基本概念汇总/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="素衣念云">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="念云小筑">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Tensorflow基本概念汇总
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T22:16:05+08:00">
+                2017-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>——以下概念基本取自《TensorFlow实战Google深度学习框架》与各种无私博主</p>
+<p>TensorFlow程序一般可以分为两个阶段，</p>
+<ul>
+<li>构造部分，使用tensor表示数据，使用graph来表示计算任务</li>
+<li>执行部分，在被称为Session的context里执行图中的计算（使用feed和fetch可以为任意的op赋值或从中获取数据）</li>
+</ul>
+<h3 id="计算图"><a href="#计算图" class="headerlink" title="计算图"></a>计算图</h3><p>TensorFlow中每一个计算都是计算图上的一个节点。TensorFlow会自动生成一个默认的计算图，如果没有特殊指定，运算会自动加入这个计算图中。</p>
+<h3 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h3><p>在TensorFlow中，张量并没有真正保存数字，它只是对TensorFlow中运算结果的引用。一个张量中主要保存了三个属性：名字（name）、维度（shape）和类型（type）。张量的命名是通过<code>“node:src_output”</code>的形式来给出，<code>node</code>为节点的名称，<code>src_ouput</code>表示当前张量来自节点的第几个输出（编号从0开始）。当计算图构造完成后，可以通过会话（session）来得到张量的计算结果（或者借助eval()），如<code>tf.Session().run(result)</code>。</p>
+<h3 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h3><p>TensorFlow中的会话（session）用来执行定义好的运算。TensorFlow不会自动生成默认的会话，需要手动指定。</p>
+<h3 id="placeholder机制"><a href="#placeholder机制" class="headerlink" title="placeholder机制"></a>placeholder机制</h3><p>TensorFlow提供了placeholder机制用于提供输入数据：placeholder相当于定义了一个位置，这个位置的数据在程序运行时再使用feed_dict来指定。<br>为什么会出现这个？若每轮迭代选取的数据都要通过常量来表示，计算图的节点就会非常多。（那为什么不适用variable呢？我现在还没想清楚）</p>
+<h2 id="collection集合"><a href="#collection集合" class="headerlink" title="collection集合"></a>collection集合</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">tf.add_to_collection(&apos;losses&apos;, mse_loss)</div><div class="line">loss = tf.get_collection(&apos;losses&apos;)12</div></pre></td></tr></table></figure>
+<p>在一个计算图中，可以通过集合（collection）来管理不同类别的资源（可以是张量、变量或者运行Tensorflow程序所需要的队列资源等）。比如通过<code>tf.add_to_collection</code>函数可以将资源加入一个或多个集合中，然后通过<code>tf.get_collection</code>获取一个集合里面的所有资源。<br>TensorFlow中也自动管理了一些最常用的集合，如：tf.GraphKeys.TRAINABLE_VARIABLES是可学习变量的集合，可通过<code>tf.trainable_variables()</code>获得。</p>
+<p>见《TensorFlow实战Google深度学习框架》P42。</p>
+<h2 id="tf-constant"><a href="#tf-constant" class="headerlink" title="tf.constant"></a>tf.constant</h2><p><code>a = tf.constant([1.0, 2.0], name=&#39;a&#39;)</code><br><code>tf.constant</code>是一个计算，这个计算的结果为一个张量，保存在变量a中。<br>张量主要的三个属性：名字（name）、维度（shape）和类型（type）。<br>见《TensorFlow实战Google深度学习框架》P43。</p>
+<h2 id="tf-matmul"><a href="#tf-matmul" class="headerlink" title="tf.matmul"></a>tf.matmul</h2><p><code>a=tf.matmul(x, w1)</code><br><code>tf.matmul</code>实现了矩阵乘法的功能。</p>
+<h2 id="tf-Variable"><a href="#tf-Variable" class="headerlink" title="tf.Variable"></a>tf.Variable</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">weights = tf.Variable(tf.random_normal([2, 3], stddev=2))</div><div class="line">w2=tf.Variable(weights.initiallized_value())12</div></pre></td></tr></table></figure>
+<p>变量<code>tf.Variable</code>的作用就是保存和更新神经网络中的参数，也支持通过其他变量的初始值来初始化新的变量。<code>tf.Variable</code>是一个类。<br>tensorflow随机数生成函数：<code>tf.random_normal</code>、<code>tf.truncated_normal</code>、<code>tf.random_uniform</code>、<code>tf.random_gamma</code><br>tensorflow常数生成函数：<code>tf.zeros</code>、<code>tf.ones</code>、<code>tf.fill</code>、<code>tf.constant</code><br>见《TensorFlow实战Google深度学习框架》P43。</p>
+<h2 id="tf-get-variable-和-tf-variable-scope"><a href="#tf-get-variable-和-tf-variable-scope" class="headerlink" title="tf.get_variable() 和 tf.variable_scope()"></a>tf.get_variable() 和 tf.variable_scope()</h2><p>和tf.Variable不同的一点是，<code>tf.get_variable</code> 必须包含一个指定变量名称的参数，它会根据这个名字去创建或者获取变量。如果需要通过<code>tf.get_variable</code>获取一个已经创建的变量，需要通过<code>tf.variable_scope</code>函数生成一个上下文管理器。具体说来，当<code>tf.variable_scope</code>函数使用参数reuse=True生成上下文管理器时，这个上下文管理器内所有的<code>tf.get_variable</code>函数会直接获取已经创建的变量，如果变量不存在则<code>tf.get_variable</code>函数将报错；相反，如果tf.variable_scope函数使用参数reuse=False生成上下文管理器时，<code>tf.get_variable</code>操作将创建新的变量，如果同名的变量已经存在，则<code>tf.get_variable</code>函数将报错。说起来有点绕，可以看下书籍《TensorFlow实战Google深度学习框架》5.3节 变量管理。<br>想一下，为什么这么做呢？答：这种变量管理的方式就不需要将所有变量都作为参数传递到不同的函数中了，并且大大提高程序的可读性。<br>除此之外，<code>tf.variable_scope</code>函数也会创建一个命名空间，在命名空间内创建的变量名称都会带上这个命名空间名作为前缀。<code>tf.name_scope</code>也会创建一个命名空间，但和前者的区别在于此函数将会自动忽略<code>tf.get_variable</code> 创建的变量。<br>参见：《TensorFlow实战Google深度学习框架》5.3节 变量管理 ；<a href="http://stackoverflow.com/questions/35919020/whats-the-difference-of-name-scope-and-a-variable-scope-in-tensorflow" target="_blank" rel="external">What’s the difference of name scope and a variable scope in tensorflow?</a></p>
+<h2 id="tf-assign"><a href="#tf-assign" class="headerlink" title="tf.assign"></a>tf.assign</h2><p><code>assign(ref, value, validate_shape=None, use_locking=None, name=None)</code><br>tf.assign用来更新模型中变量的值，效果等同于 ref = value。</p>
+<h2 id="tf-train-ExponentialMovingAverage滑动平均"><a href="#tf-train-ExponentialMovingAverage滑动平均" class="headerlink" title="tf.train.ExponentialMovingAverage滑动平均"></a>tf.train.ExponentialMovingAverage滑动平均</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ema = tf.train.ExponentialMovingAverage(decay, num_updates)  # 定义了一个滑动平均类的对象，初始化时给定了衰减率deay和控制衰减率的变量num_updates</div><div class="line">maintain_averages_op = ema.apply([v1])  #定义一个更新变量滑动平均的操作，每次执行这个操作时参数中的变量都会被更新</div><div class="line">sess.run(maintain_averages_op)  # 更新v1的滑动平均值</div><div class="line">v1_shadow = ema.average(v1) # 获取滑动平均之后变量的取值 1234</div></pre></td></tr></table></figure>
+<p>滑动平均不会改变变量本身的取值，而是会维护一个影子变量来记录其滑动平均值。所以当需要使用这个滑动平均值时，需要明确调用average函数。<br>参见《TensorFlow实战Google深度学习框架》P90</p>
+<h2 id="tf-contrib-layer-l2-regularizer-正则化"><a href="#tf-contrib-layer-l2-regularizer-正则化" class="headerlink" title="tf.contrib.layer.l2_regularizer 正则化"></a>tf.contrib.layer.l2_regularizer 正则化</h2><p>TensorFlow提供了<code>tf.contrib.layer.l2_regularizer</code> 函数，它可以返回一个函数，这个函数可以计算一个给定参数的L2正则化的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">loss_regular = tf.contrib.layer.l2_regularizer(lambda)(weights)  # lambda为正则化项的权重，weights为需要正则化的值1</div></pre></td></tr></table></figure>
+<p>参见《TensorFlow实战Google深度学习框架》P88</p>
+<h2 id="tf-train-exponential-decay-指数衰减学习率"><a href="#tf-train-exponential-decay-指数衰减学习率" class="headerlink" title="tf.train.exponential_decay 指数衰减学习率"></a>tf.train.exponential_decay 指数衰减学习率</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">learning_rate = tf.train.exponential_decay(LEARNING_RATE_BASE, global_step, mnist.train.num_examples/BATCH_SIZE, LEARNING_RATE_DECAY)  # (基础学习率，当前迭代轮数，衰减速度（通常为过完一次所有训练数据需要的迭代次数），学习率衰减系数)</div><div class="line">train_step = tf.train.GradientDescentOptimizer(learning_rate).minimize(my_loss, global_step=global_step) # 使用指数衰减的学习率。在minimize函数中传入global_step将自动更新global_step参数，从而使得学习率也得到相应更新。12</div></pre></td></tr></table></figure>
+<p>衰减公式：learning_rate=learning_rate_base∗decay_rate(global_step/decay_steps)</p>
+<p>参见《TensorFlow实战Google深度学习框架》P85</p>
+<h2 id="placeholder机制-1"><a href="#placeholder机制-1" class="headerlink" title="placeholder机制"></a>placeholder机制</h2><p>为什么会出现这个？若每轮迭代选取的数据都要通过常量来表示，计算图的节点就会非常多。为了避免这个问题，TensorFlow提供了placeholder机制用于提供输入数据：placeholder相当于定义了一个位置，这个位置的数据在程序运行时再使用feed_dict来指定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">x = tf.placeholder(tf.float32, shape=(3, 2), name=&quot;input&quot;)</div><div class="line">sess.run(y, feed_dict=&#123;x:[[0.7, 0.9], [0.1, 0.4], [0.5, 0.8]]&#125;)12</div></pre></td></tr></table></figure>
+<h2 id="tf-control-dependencies控制依赖"><a href="#tf-control-dependencies控制依赖" class="headerlink" title="tf.control_dependencies控制依赖"></a>tf.control_dependencies控制依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">with g.control_dependencies([a, b, c]): </div><div class="line"># `d` 和 `e` 将在 `a`, `b`, 和`c`执行完之后运行 </div><div class="line">d = … </div><div class="line">e = … 1234</div></pre></td></tr></table></figure>
+<p>在训练神经网络模型时，每过一遍数据既要通过反向传播来更新神经网络中的参数，又要更新每一个参数的滑动平均值。为了一次完成多个操作，TensorFlow提供了tf.control_dependencies和tf.group两种机制。下面两行程序和<code>train_op = tf.group(train_step, variables_averages_op)</code>是等价的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">with tf.control_dependencies([train_step, variables_averages_op]):</div><div class="line">    train_op = tf.no_op(name=&apos;train&apos;)12</div></pre></td></tr></table></figure>
+<h2 id="tf-nn-sparse-softmax-cross-entropy-with-logits交叉熵函数"><a href="#tf-nn-sparse-softmax-cross-entropy-with-logits交叉熵函数" class="headerlink" title="tf.nn.sparse_softmax_cross_entropy_with_logits交叉熵函数"></a>tf.nn.sparse_softmax_cross_entropy_with_logits交叉熵函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(y, tf.argmax(y_, 1))1</div></pre></td></tr></table></figure>
+<p>当分类问题只有一个正确答案时，可以使用这个函数来加速交叉熵的计算。这个函数的第一个参数时神经网络不包括softmax层的前向传播结果，第二个是训练数据的正确答案。因为标准答案是一个长度为10的一维数组，而该函数需要提供的是一个正确答案的数字，所以需要使用tf.argmax函数来得到正确答案对应的类别编号。</p>
+<h2 id="tf-train-GradientDescentOptimizer优化算法"><a href="#tf-train-GradientDescentOptimizer优化算法" class="headerlink" title="tf.train.GradientDescentOptimizer优化算法"></a>tf.train.GradientDescentOptimizer优化算法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">train_step = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss, global_step=global_step)1</div></pre></td></tr></table></figure>
+<p>使用其来优化损失函数，注意在这个函数中会把<code>global_step</code>的值加1。</p>
+<h2 id="tf-train-Saver-保存加载模型"><a href="#tf-train-Saver-保存加载模型" class="headerlink" title="tf.train.Saver()保存加载模型"></a>tf.train.Saver()保存加载模型</h2><p>保存模型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">saver = tf.train.Saver()</div><div class="line">saver.save(sess, path_to_save, global_step=global_step)12</div></pre></td></tr></table></figure>
+<p>通过变量重命名的方式加载部分模型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">variable_averages = tf.train.ExponentialMovingAverage(mnist_train.MOVING_AVERAGE_DECAY) </div><div class="line">variables_to_restore = variable_averages.variables_to_restore() # Returns a map of names to Variables to restore</div><div class="line">saver = tf.train.Saver(variables_to_restore) #参数可以是一个dict(即这里的用法)也可以是一个list</div><div class="line">saver.restore(sess, path_saved)1234</div></pre></td></tr></table></figure>
+<p>参考：<a href="http://wiki.jikexueyuan.com/project/tensorflow-zh/how_tos/variables.html" target="_blank" rel="external">变量:创建、初始化、保存和加载</a>；<a href="https://www.tensorflow.org/api_docs/python/tf/train/ExponentialMovingAverage#variables_to_restore" target="_blank" rel="external">variables_to_restore(moving_avg_variables=None)</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>小二不易生活，求客官打赏一二(๑¯◡¯๑)</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/wechat-reward-image.JPG" alt="素衣念云 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tensorflow/" rel="tag"><i class="fa fa-tag"></i> tensorflow</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/05/记录_完成Hexo+Next的博客搭建/" rel="next" title="完成Hexo+Next的博客搭建">
+                <i class="fa fa-chevron-left"></i> 完成Hexo+Next的博客搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTIxMC83NzU5"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="素衣念云" />
+          <p class="site-author-name" itemprop="name">素衣念云</p>
+           
+              <p class="site-description motion-element" itemprop="description">新的生活，记录下平平淡淡的点点滴滴……</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/your-user-name" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/your-user-name" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/your-user-name" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://douban.com/people/your-user-name" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/your-user-name" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐网站
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://aclweb.org/anthology/" title="ACL Anthology" target="_blank">ACL Anthology</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://isujin.com/" title="素锦" target="_blank">素锦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://scholar.google.com/" title="谷歌学术" target="_blank">谷歌学术</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.qdaily.com/" title="好奇心日报" target="_blank">好奇心日报</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算图"><span class="nav-number">1.1.</span> <span class="nav-text">计算图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量"><span class="nav-number">1.2.</span> <span class="nav-text">张量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话"><span class="nav-number">1.3.</span> <span class="nav-text">会话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#placeholder机制"><span class="nav-number">1.4.</span> <span class="nav-text">placeholder机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#collection集合"><span class="nav-number">2.</span> <span class="nav-text">collection集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-constant"><span class="nav-number">3.</span> <span class="nav-text">tf.constant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-matmul"><span class="nav-number">4.</span> <span class="nav-text">tf.matmul</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-Variable"><span class="nav-number">5.</span> <span class="nav-text">tf.Variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-get-variable-和-tf-variable-scope"><span class="nav-number">6.</span> <span class="nav-text">tf.get_variable() 和 tf.variable_scope()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-assign"><span class="nav-number">7.</span> <span class="nav-text">tf.assign</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-train-ExponentialMovingAverage滑动平均"><span class="nav-number">8.</span> <span class="nav-text">tf.train.ExponentialMovingAverage滑动平均</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-contrib-layer-l2-regularizer-正则化"><span class="nav-number">9.</span> <span class="nav-text">tf.contrib.layer.l2_regularizer 正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-train-exponential-decay-指数衰减学习率"><span class="nav-number">10.</span> <span class="nav-text">tf.train.exponential_decay 指数衰减学习率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#placeholder机制-1"><span class="nav-number">11.</span> <span class="nav-text">placeholder机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-control-dependencies控制依赖"><span class="nav-number">12.</span> <span class="nav-text">tf.control_dependencies控制依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-nn-sparse-softmax-cross-entropy-with-logits交叉熵函数"><span class="nav-number">13.</span> <span class="nav-text">tf.nn.sparse_softmax_cross_entropy_with_logits交叉熵函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-train-GradientDescentOptimizer优化算法"><span class="nav-number">14.</span> <span class="nav-text">tf.train.GradientDescentOptimizer优化算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-train-Saver-保存加载模型"><span class="nav-number">15.</span> <span class="nav-text">tf.train.Saver()保存加载模型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">素衣念云</span>
+</div>
+
+
+<!-- <div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div> -->
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>小筑访客人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>小二招待访客次数
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
